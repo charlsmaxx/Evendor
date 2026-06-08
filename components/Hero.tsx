@@ -26,8 +26,9 @@ export function Hero() {
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-card/80 px-4 py-1.5 text-sm text-accent shadow-sm"
             >
               <Sparkles className="h-4 w-4" />
-              <span>Events start at Evendor
-              — Africa's #1 event marketplace</span>
+              <span>
+                Events start at Evendor — Africa&apos;s #1 event marketplace
+              </span>
             </motion.div>
 
             <motion.h1
