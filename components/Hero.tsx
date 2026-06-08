@@ -8,6 +8,10 @@ import { WaitlistSocialProof } from "@/components/WaitlistSocialProof";
 import { HERO_IMAGES } from "@/lib/constants";
 import { defaultTransition, staggerContainer, staggerItem } from "@/lib/animations";
 
+const HERO_BADGE = "Events start at Evendor — Africa's #1 event marketplace";
+const HERO_SUBTITLE =
+  "Nigeria's Marketplace for Event Vendors and Event Halls.";
+
 export function Hero() {
   return (
     <section className="relative overflow-hidden pt-24 pb-6 sm:pt-28 sm:pb-10 lg:pt-32 lg:pb-12">
@@ -26,9 +30,7 @@ export function Hero() {
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-card/80 px-4 py-1.5 text-sm text-accent shadow-sm"
             >
               <Sparkles className="h-4 w-4" />
-              <span>
-                {"Events start at Evendor — Africa's #1 event marketplace"}
-              </span>
+              <span>{HERO_BADGE}</span>
             </motion.div>
 
             <motion.h1
@@ -45,7 +47,7 @@ export function Hero() {
               variants={staggerItem}
               className="mt-4 font-heading text-xl  sm:text-2xl"
             >
-              {"Nigeria's Marketplace for Event Vendors and Event Halls."}
+              {HERO_SUBTITLE}
             </motion.p>
 
             <motion.p
