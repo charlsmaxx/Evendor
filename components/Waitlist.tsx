@@ -86,10 +86,10 @@ export function Waitlist() {
               <div className="flex flex-col items-center gap-3 py-8 text-center">
                 <CheckCircle2 className="h-12 w-12 text-accent" />
                 <p className="font-heading text-xl font-semibold text-foreground">
-                  You&apos;re on the list!
+                  {"You're on the list!"}
                 </p>
                 <p className="text-muted">
-                  Thank you for joining. We&apos;ll be in touch before launch.
+                  {"Thank you for joining. We'll be in touch before launch."}
                 </p>
                 <Button
                   type="button"

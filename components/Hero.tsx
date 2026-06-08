@@ -27,7 +27,7 @@ export function Hero() {
             >
               <Sparkles className="h-4 w-4" />
               <span>
-                Events start at Evendor — Africa&apos;s #1 event marketplace
+                {"Events start at Evendor — Africa's #1 event marketplace"}
               </span>
             </motion.div>
 
@@ -35,15 +35,17 @@ export function Hero() {
               variants={staggerItem}
               className="font-heading text-3xl font-semibold leading-[1.15] text-foreground sm:text-4xl lg:text-[2.75rem]"
             >
-              Find. Compare. Book &amp; <br />
-              Make Every Event <br /> <span className="text-accent">Unforgettable.</span>
+              {"Find. Compare. Book & "}
+              <br />
+              Make Every Event <br />{" "}
+              <span className="text-accent">Unforgettable.</span>
             </motion.h1>
 
             <motion.p
               variants={staggerItem}
               className="mt-4 font-heading text-xl  sm:text-2xl"
             >
-              Nigeria&apos;s Marketplace for Event Vendors and Event Halls.
+              {"Nigeria's Marketplace for Event Vendors and Event Halls."}
             </motion.p>
 
             <motion.p
@@ -98,7 +100,6 @@ export function Hero() {
                 </motion.div>
               ))}
             </div>
-          
           </motion.div>
         </div>
       </div>

@@ -33,7 +33,7 @@ export function ForVendors() {
                 Grow Your Event Business
               </h2>
               <p className="mt-4 max-w-md text-base leading-relaxed text-white/90">
-                Join Nigeria&apos;s marketplace built for event professionals.
+                {"Join Nigeria's marketplace built for event professionals."}
                 Get discovered by planners actively looking for your services.
               </p>
               <div className="mt-8">

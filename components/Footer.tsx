@@ -19,7 +19,7 @@ export function Footer() {
               Plan. Book. Celebrate.
             </p>
             <p className="mt-2 max-w-sm text-sm text-muted">
-              Nigeria&apos;s marketplace for event vendors and event halls.
+              {"Nigeria's marketplace for event vendors and event halls."}
               Find trusted professionals in one place.
             </p>
           </div>
