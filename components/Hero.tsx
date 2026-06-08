@@ -35,7 +35,7 @@ export function Hero() {
               variants={staggerItem}
               className="font-heading text-3xl font-semibold leading-[1.15] text-foreground sm:text-4xl lg:text-[2.75rem]"
             >
-              Find. Compare. Book & <br />
+              Find. Compare. Book &amp; <br />
               Make Every Event <br /> <span className="text-accent">Unforgettable.</span>
             </motion.h1>
 

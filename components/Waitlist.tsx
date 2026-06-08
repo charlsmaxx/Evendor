@@ -65,7 +65,9 @@ export function Waitlist() {
         <SectionHeading
           eyebrow="Early access"
           title="Join the Evendor waitlist"
-          description="Be the first to know when we launch. Whether you're waiting to book, listing as a vendor, or own an event hall."
+          description={
+            "Be the first to know when we launch. Whether you're waiting to book, listing as a vendor, or own an event hall."
+          }
         />
 
         <motion.div

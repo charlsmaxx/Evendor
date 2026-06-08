@@ -10,7 +10,7 @@ export function FAQ() {
       <div className="section-container">
         <SectionHeading
           eyebrow="FAQ"
-          title="Questions? We've got answers."
+          title={"Questions? We've got answers."}
           description="Everything you need to know about joining Evendor before launch."
         />
         <div className="mx-auto max-w-3xl">
