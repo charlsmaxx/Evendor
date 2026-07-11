@@ -8,7 +8,7 @@ import { WaitlistSocialProof } from "@/components/WaitlistSocialProof";
 import { HERO_IMAGES } from "@/lib/constants";
 import { defaultTransition, staggerContainer, staggerItem } from "@/lib/animations";
 
-const HERO_BADGE = "Events start at Evendor — Africa's #1 event marketplace";
+const HERO_BADGE = "Events start at Evendor";
 const HERO_SUBTITLE =
   "Nigeria's Marketplace for Event Vendors and Event Halls.";
 
