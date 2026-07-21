@@ -35,7 +35,7 @@ export function Hero() {
               variants={staggerItem}
               className="font-heading text-3xl font-semibold leading-[1.15] text-accent sm:text-4xl lg:text-[2.75rem]"
             >
-              Find. Compare.{" "}
+              Discover.{" "}
               <span className="text-foreground">Book</span> &{" "}
               <br />
               Make Every Event <br />{" "}
