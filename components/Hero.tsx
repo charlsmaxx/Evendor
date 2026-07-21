@@ -82,9 +82,9 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ ...defaultTransition, delay: 0.2 }}
-            className="relative hidden lg:block"
+            className="relative mt-4 lg:mt-0"
           >
-            <div className="grid min-h-[220px] grid-cols-4 grid-rows-2 gap-2 sm:min-h-[360px] sm:gap-3">
+            <div className="grid min-h-[220px] grid-cols-4 grid-rows-2 gap-2 sm:min-h-[300px] sm:gap-3 lg:min-h-[360px]">
               {HERO_IMAGES.map((img, i) => (
                 <motion.div
                   key={img.src}
