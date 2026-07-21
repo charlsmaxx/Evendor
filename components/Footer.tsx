@@ -1,4 +1,5 @@
 import { Logo } from "@/components/ui/Logo";
+import { SocialFollow } from "@/components/SocialFollow";
 import { CONTACT } from "@/lib/constants";
 import { Phone, MapPin } from "lucide-react";
 
@@ -16,12 +17,13 @@ export function Footer() {
           <div className="lg:col-span-2">
             <Logo size="md" />
             <p className="mt-4 font-heading text-lg text-accent">
-              Plan. Book. Celebrate.
+              Discover. Book. Celebrate.
             </p>
             <p className="mt-2 max-w-sm text-sm text-muted">
               {"Nigeria's marketplace for event vendors and event halls."}
-              Find trusted professionals in one place.
+                Find trusted professionals in one place.
             </p>
+            <SocialFollow className="mt-6" />
           </div>
 
           <div>

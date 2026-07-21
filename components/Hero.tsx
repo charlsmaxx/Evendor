@@ -9,8 +9,6 @@ import { HERO_IMAGES } from "@/lib/constants";
 import { defaultTransition, staggerContainer, staggerItem } from "@/lib/animations";
 
 const HERO_BADGE = "Events start at Evendor";
-const HERO_SUBTITLE =
-  "Nigeria's Marketplace for Event Vendors and Event Halls.";
 
 export function Hero() {
   return (
@@ -18,7 +16,7 @@ export function Hero() {
       <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-accent/8 blur-3xl" />
       <div className="pointer-events-none absolute -left-24 bottom-0 h-72 w-72 rounded-full bg-accent/5 blur-3xl" />
 
-      <div className="section-container">
+      <div className="section-container relative z-10">
         <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-16">
           <motion.div
             initial="hidden"
@@ -27,27 +25,31 @@ export function Hero() {
           >
             <motion.div
               variants={staggerItem}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-card/80 px-4 py-1.5 text-sm text-accent shadow-sm"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-card/80 px-4 py-1.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-sm"
             >
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-4 w-4 text-accent" />
               <span>{HERO_BADGE}</span>
             </motion.div>
 
             <motion.h1
               variants={staggerItem}
-              className="font-heading text-3xl font-semibold leading-[1.15] text-foreground sm:text-4xl lg:text-[2.75rem]"
+              className="font-heading text-3xl font-semibold leading-[1.15] text-accent sm:text-4xl lg:text-[2.75rem]"
             >
-              {"Find. Compare. Book & "}
+              Find. Compare.{" "}
+              <span className="text-foreground">Book</span> &{" "}
               <br />
               Make Every Event <br />{" "}
-              <span className="text-accent">Unforgettable.</span>
+              <span className="text-foreground">Unforgettable.</span>
             </motion.h1>
 
             <motion.p
               variants={staggerItem}
-              className="mt-4 font-heading text-xl  sm:text-2xl"
+              className="mt-4 font-heading text-xl text-accent sm:text-2xl"
             >
-              {HERO_SUBTITLE}
+              Nigeria&apos;s Marketplace for{" "}
+              <span className="text-foreground">
+                Event Vendors and Event Halls.
+              </span>
             </motion.p>
 
             <motion.p
@@ -80,7 +82,7 @@ export function Hero() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ ...defaultTransition, delay: 0.2 }}
-            className="relative"
+            className="relative hidden lg:block"
           >
             <div className="grid min-h-[220px] grid-cols-4 grid-rows-2 gap-2 sm:min-h-[360px] sm:gap-3">
               {HERO_IMAGES.map((img, i) => (

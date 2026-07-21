@@ -1,8 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Users, BarChart3, Mail } from "lucide-react";
+import { Users, BarChart3, Mail, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { EARLY_BIRD_HALL } from "@/lib/constants";
 import { fadeUp, viewportOnce, defaultTransition } from "@/lib/animations";
 
 const benefits = [
@@ -42,6 +43,26 @@ export function ForHallOwners() {
             <h2 className="mt-3 font-heading text-3xl font-semibold text-foreground sm:text-4xl">
               Fill More Dates On Your Calendar
             </h2>
+            <p className="mt-4 text-base leading-relaxed text-muted">
+              List your venue where planners are already looking—stop relying on
+              word of mouth alone.
+            </p>
+          </div>
+
+          <div className="mx-auto mt-8 max-w-2xl rounded-2xl border border-accent/15 bg-card p-5 shadow-sm">
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div className="text-left">
+                <p className="font-heading text-lg font-semibold text-foreground">
+                  {EARLY_BIRD_HALL.headline}
+                </p>
+                <p className="mt-1 text-sm leading-relaxed text-muted">
+                  {EARLY_BIRD_HALL.description}
+                </p>
+              </div>
+            </div>
           </div>
 
           <ul className="mx-auto mt-10 grid max-w-4xl gap-4 sm:grid-cols-3">

@@ -38,10 +38,6 @@ export const metadata: Metadata = {
     description:
       "Find trusted event vendors, event halls, makeup artists, decorators, caterers, DJs, MCs and rental services in one place.",
   },
-  icons: {
-    icon: [{ url: "/evendor-logo.png", type: "image/png" }],
-    apple: [{ url: "/evendor-logo.png", type: "image/png" }],
-  },
 };
 
 export default function RootLayout({

@@ -1,14 +1,21 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { TrendingUp, MessageSquare, CalendarCheck, Globe } from "lucide-react";
+import {
+  TrendingUp,
+  MessageSquare,
+  CalendarCheck,
+  Globe,
+  Sparkles,
+} from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { EARLY_BIRD_VENDOR } from "@/lib/constants";
 import { fadeUp, viewportOnce, defaultTransition } from "@/lib/animations";
 
 const benefits = [
-  { icon: TrendingUp, text: "More visibility" },
-  { icon: MessageSquare, text: "More inquiries" },
-  { icon: CalendarCheck, text: "More bookings" },
+  { icon: TrendingUp, text: "10x more bookings on average" },
+  { icon: MessageSquare, text: "More qualified inquiries" },
+  { icon: CalendarCheck, text: "Fill your calendar faster" },
   { icon: Globe, text: "Professional online presence" },
 ];
 
@@ -33,9 +40,28 @@ export function ForVendors() {
                 Grow Your Event Business
               </h2>
               <p className="mt-4 max-w-md text-base leading-relaxed text-white/90">
-                {"Join Nigeria's marketplace built for event professionals."}
-                Get discovered by planners actively looking for your services.
+                Vendors on Evendor get{" "}
+                <strong className="font-semibold text-white">
+                  10x more bookings
+                </strong>{" "}
+                by reaching planners actively searching for your services—not
+                waiting on WhatsApp forwards.
               </p>
+
+              <div className="mt-6 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-sm">
+                <div className="flex items-start gap-3">
+                  <Sparkles className="mt-0.5 h-5 w-5 shrink-0 text-white/90" />
+                  <div>
+                    <p className="font-semibold text-white">
+                      {EARLY_BIRD_VENDOR.headline}
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-white/85">
+                      {EARLY_BIRD_VENDOR.description}
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="mt-8">
                 <Button
                   href="#waitlist"

@@ -1,19 +1,33 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { motion } from "framer-motion";
-import { Loader2, CheckCircle2, AlertCircle } from "lucide-react";
+import { Loader2, AlertCircle, UserPlus } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
-import { WAITLIST_ROLE_OPTIONS, type WaitlistRole } from "@/lib/constants";
+import { ReferralShare } from "@/components/ReferralShare";
+import { VendorCategoryModal } from "@/components/VendorCategoryModal";
+import {
+  WAITLIST_ROLE_OPTIONS,
+  formatVendorRole,
+  isValidWaitlistRole,
+  isVendorRole,
+  parseVendorCategory,
+  type WaitlistRole,
+} from "@/lib/constants";
+import {
+  captureReferralFromUrl,
+  getStoredReferral,
+  saveMyReferralCode,
+} from "@/lib/referral";
 import { fadeUp, viewportOnce, defaultTransition } from "@/lib/animations";
 
 interface WaitlistFormData {
   name: string;
   email: string;
   phone: string;
-  role: WaitlistRole;
+  role: string;
 }
 
 export function Waitlist() {
@@ -21,26 +35,69 @@ export function Waitlist() {
     "idle"
   );
   const [errorMessage, setErrorMessage] = useState("");
+  const [referredBy, setReferredBy] = useState<string | null>(null);
+  const [referralCode, setReferralCode] = useState<string | null>(null);
+  const [submittedName, setSubmittedName] = useState("");
+  const [vendorModalOpen, setVendorModalOpen] = useState(false);
+  const [roleError, setRoleError] = useState("");
+
+  useEffect(() => {
+    setReferredBy(captureReferralFromUrl());
+  }, []);
 
   const {
     register,
     handleSubmit,
     reset,
     control,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<WaitlistFormData>({
     defaultValues: { role: "Customer (Waiting to Book)" },
   });
 
+  const selectedRole = watch("role");
+  const selectedVendorCategory = parseVendorCategory(selectedRole);
+
+  const handleRoleSelect = (optionValue: WaitlistRole) => {
+    setRoleError("");
+
+    if (optionValue === "Vendor") {
+      setVendorModalOpen(true);
+      return;
+    }
+
+    setValue("role", optionValue, { shouldValidate: true });
+  };
+
+  const handleVendorCategorySelect = (category: string) => {
+    setValue("role", formatVendorRole(category), { shouldValidate: true });
+    setRoleError("");
+    setVendorModalOpen(false);
+  };
+
   const onSubmit = async (data: WaitlistFormData) => {
+    if (!isValidWaitlistRole(data.role)) {
+      setRoleError("Please select your vendor category to continue.");
+      setVendorModalOpen(true);
+      return;
+    }
+
     setStatus("loading");
     setErrorMessage("");
+    setRoleError("");
+
+    const referral = getStoredReferral();
 
     try {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          ...data,
+          ...(referral ? { referredBy: referral } : {}),
+        }),
       });
 
       const result = await res.json();
@@ -49,6 +106,9 @@ export function Waitlist() {
         throw new Error(result.error ?? "Something went wrong. Please try again.");
       }
 
+      const code = saveMyReferralCode(data.email);
+      setReferralCode(code);
+      setSubmittedName(data.name.trim());
       setStatus("success");
       reset();
     } catch (err) {
@@ -65,9 +125,7 @@ export function Waitlist() {
         <SectionHeading
           eyebrow="Early access"
           title="Join the Evendor waitlist"
-          description={
-            "Be the first to know when we launch. Whether you're waiting to book, listing as a vendor, or own an event hall."
-          }
+          description="Be the first to know when we launch. Join now, get your personal invite link, and unlock rewards for every friend you bring."
         />
 
         <motion.div
@@ -82,26 +140,20 @@ export function Waitlist() {
             onSubmit={handleSubmit(onSubmit)}
             className="rounded-3xl border border-accent/10 bg-card p-6 shadow-xl shadow-accent/5 sm:p-8"
           >
-            {status === "success" ? (
-              <div className="flex flex-col items-center gap-3 py-8 text-center">
-                <CheckCircle2 className="h-12 w-12 text-accent" />
-                <p className="font-heading text-xl font-semibold text-foreground">
-                  {"You're on the list!"}
-                </p>
-                <p className="text-muted">
-                  {"Thank you for joining. We'll be in touch before launch."}
-                </p>
-                <Button
-                  type="button"
-                  variant="outline"
-                  className="mt-4"
-                  onClick={() => setStatus("idle")}
-                >
-                  Submit another
-                </Button>
-              </div>
+            {status === "success" && referralCode ? (
+              <ReferralShare referralCode={referralCode} name={submittedName} />
             ) : (
               <div className="space-y-5">
+                {referredBy && (
+                  <div className="flex items-center gap-2 rounded-xl border border-accent/15 bg-accent/5 px-4 py-3 text-sm text-accent">
+                    <UserPlus className="h-4 w-4 shrink-0" />
+                    <span>
+                      You were invited! Your signup helps your friend unlock
+                      launch rewards.
+                    </span>
+                  </div>
+                )}
+
                 <div>
                   <label
                     htmlFor="name"
@@ -179,12 +231,21 @@ export function Waitlist() {
                     render={({ field }) => (
                       <div className="space-y-2">
                         {WAITLIST_ROLE_OPTIONS.map((option) => {
-                          const isSelected = field.value === option.value;
+                          const isVendorOption = option.value === "Vendor";
+                          const isSelected = isVendorOption
+                            ? isVendorRole(field.value)
+                            : field.value === option.value;
+                          const displayLabel = isVendorOption
+                            ? selectedVendorCategory
+                              ? formatVendorRole(selectedVendorCategory)
+                              : option.label
+                            : option.label;
+
                           return (
                             <button
                               key={option.value}
                               type="button"
-                              onClick={() => field.onChange(option.value)}
+                              onClick={() => handleRoleSelect(option.value)}
                               className={`flex w-full items-center gap-2 rounded-xl border px-4 py-3 text-left transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 ${
                                 isSelected
                                   ? "border-accent bg-accent/5"
@@ -203,8 +264,13 @@ export function Waitlist() {
                                 )}
                               </span>
                               <span className="font-medium text-foreground">
-                                {option.label}
+                                {displayLabel}
                               </span>
+                              {isVendorOption && isSelected && (
+                                <span className="ml-auto text-xs text-muted">
+                                  Change
+                                </span>
+                              )}
                             </button>
                           );
                         })}
@@ -214,7 +280,17 @@ export function Waitlist() {
                   {errors.role && (
                     <p className="mt-1 text-sm text-accent">{errors.role.message}</p>
                   )}
+                  {roleError && (
+                    <p className="mt-1 text-sm text-accent">{roleError}</p>
+                  )}
                 </div>
+
+                <VendorCategoryModal
+                  open={vendorModalOpen}
+                  onClose={() => setVendorModalOpen(false)}
+                  onSelect={handleVendorCategorySelect}
+                  selectedCategory={selectedVendorCategory ?? undefined}
+                />
 
                 {status === "error" && (
                   <div className="flex items-center gap-2 rounded-xl bg-accent/10 px-4 py-3 text-sm text-accent">
@@ -238,9 +314,29 @@ export function Waitlist() {
                     "Join Waitlist"
                   )}
                 </Button>
+
+                <p className="text-center text-xs text-muted">
+                  After joining, you&apos;ll get a personal link to invite
+                  others and earn launch rewards.
+                </p>
               </div>
             )}
           </form>
+
+          {status === "success" && (
+            <div className="mt-4 text-center">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  setStatus("idle");
+                  setReferralCode(null);
+                }}
+              >
+                Submit another
+              </Button>
+            </div>
+          )}
         </motion.div>
       </div>
     </section>

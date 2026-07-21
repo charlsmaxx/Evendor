@@ -66,7 +66,7 @@ export function WaitlistSocialProof() {
           </motion.div>
         ))}
       </div>
-      <p className="text-sm font-medium text-slate-600 sm:text-base">
+      <p className="text-sm font-medium text-accent sm:text-base">
         <span className="font-semibold text-foreground">{count.toLocaleString()}+</span>{" "}
         on waitlist
       </p>

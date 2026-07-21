@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import logoImg from "@/app/logo.png";
 
 interface LogoProps {
   className?: string;
@@ -10,9 +11,9 @@ interface LogoProps {
 }
 
 const sizes = {
-  sm: { width: 120, height: 56, maxH: "max-h-12" },
-  md: { width: 140, height: 64, maxH: "max-h-14" },
-  lg: { width: 160, height: 72, maxH: "max-h-16" },
+  sm: { width: 210, height: 84, maxH: "max-h-[84px]" },
+  md: { width: 240, height: 104, maxH: "max-h-20" },
+  lg: { width: 280, height: 120, maxH: "max-h-24" },
 };
 
 export function Logo({ className = "", size = "md" }: LogoProps) {
@@ -27,7 +28,7 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
     >
       {!imgError ? (
         <Image
-          src="/evendor-logo.png"
+          src={logoImg}
           alt="Evendor — Plan. Book. Celebrate."
           width={width}
           height={height}

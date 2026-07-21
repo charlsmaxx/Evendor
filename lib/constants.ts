@@ -1,3 +1,46 @@
+export const REFERRAL_TIERS = [
+  {
+    referrals: 1,
+    title: "Founding Member",
+    reward: "Early access badge and first pick when we launch in your city.",
+  },
+  {
+    referrals: 3,
+    title: "Community Builder",
+    reward: "Priority booking credits and exclusive launch-day perks.",
+  },
+  {
+    referrals: 5,
+    title: "Evendor Ambassador",
+    reward: "Surprise rewards, VIP support, and the best launch offers we offer.",
+  },
+] as const;
+
+export const TRUST_SIGNALS = [
+  {
+    title: "Vetted vendors only",
+    description:
+      "We check every professional before they join—identity verification, portfolio review, and track record.",
+  },
+  {
+    title: "Protected payments with escrow",
+    description:
+      "Your money is held securely until services are delivered. Book with confidence, not guesswork.",
+  },
+] as const;
+
+export const EARLY_BIRD_VENDOR = {
+  headline: "Early birds get the best deals",
+  description:
+    "Vendors who join the waitlist now lock in exclusive launch offers—priority placement, and bonus visibility.",
+} as const;
+
+export const EARLY_BIRD_HALL = {
+  headline: "Early birds get the best deals",
+  description:
+    "Event hall owners on the waitlist today secure priority listing, and featured placement in search results.",
+} as const;
+
 export const NAV_LINKS = [
   { label: "Features", href: "#why-evendor" },
   { label: "Categories", href: "#categories" },
@@ -12,6 +55,73 @@ export const WAITLIST_ROLES = [
 ] as const;
 
 export type WaitlistRole = (typeof WAITLIST_ROLES)[number];
+
+export const VENDOR_WAITLIST_CATEGORIES = [
+  "Event Planners",
+  "Venue Owners",
+  "Caterers",
+  "Decorators & Stylists",
+  "Bakers & Cake Designers",
+  "Photographers",
+  "Videographers",
+  "Makeup Artists",
+  "Gele & Bridal Artists",
+  "Fashion Designers",
+  "MCs / Hosts",
+  "DJ / Musicians",
+  "Florists",
+  "Lighting & Sound Providers",
+  "Rental Equipment Providers",
+  "Bridals",
+  "Transportation Providers",
+  "Security Services",
+  "Bar & Cocktail Services",
+  "Waiters / Ushers",
+  "Event Rentals (Chairs, Tables, Tents)",
+  "Printing & Branding Services",
+  "Gift & Souvenir Vendors",
+  "Catering (Small Chops, Snacks)",
+  "Balloons & Backdrop Designers",
+] as const;
+
+export type VendorWaitlistCategory = (typeof VENDOR_WAITLIST_CATEGORIES)[number];
+
+export function formatVendorRole(category: string) {
+  return `(${category}) Vendor`;
+}
+
+export function parseVendorCategory(role: string) {
+  const match = role.match(/^\((.+)\) Vendor$/);
+  return match?.[1] ?? null;
+}
+
+export function isVendorRole(role: string) {
+  return parseVendorCategory(role) !== null;
+}
+
+export function getRoleLabel(role: string) {
+  const category = parseVendorCategory(role);
+  if (category) {
+    return formatVendorRole(category);
+  }
+  return role;
+}
+
+export function isValidWaitlistRole(role: string) {
+  if (role === "Vendor") {
+    return false;
+  }
+
+  if (WAITLIST_ROLES.includes(role as WaitlistRole)) {
+    return true;
+  }
+
+  const category = parseVendorCategory(role);
+  return (
+    category !== null &&
+    VENDOR_WAITLIST_CATEGORIES.includes(category as VendorWaitlistCategory)
+  );
+}
 
 export const WAITLIST_ROLE_OPTIONS: {
   value: WaitlistRole;
@@ -32,6 +142,24 @@ export const CONTACT = {
     "Effurun, Delta State",
     "Nigeria",
   ],
+} as const;
+
+export const SOCIAL = {
+  facebook: {
+    label: "Facebook",
+    handle: "Evendor",
+    url: "https://www.facebook.com/profile.php?id=61590498944742",
+  },
+  instagram: {
+    label: "Instagram",
+    handle: "@evendors.ng",
+    url: "https://www.instagram.com/evendors.ng",
+  },
+  youtube: {
+    label: "YouTube",
+    handle: "@Evendor-n2d",
+    url: "https://www.youtube.com/@Evendor-n2d",
+  },
 } as const;
 
 export const FAQ_ITEMS = [
@@ -65,6 +193,21 @@ export const FAQ_ITEMS = [
     answer:
       "Yes. Our goal is nationwide coverage, starting with major cities and expanding based on vendor and venue sign-ups. Launching across Nigeria is core to our mission.",
   },
+  {
+    question: "How does the referral program work?",
+    answer:
+      "After you join the waitlist, you get a personal invite link. Share it with friends, family, or clients—everyone who signs up through your link counts toward your tier. The more people you bring, the bigger your launch rewards.",
+  },
+  {
+    question: "What early bird benefits do vendors and hall owners get?",
+    answer:
+      "Early birds on the waitlist lock in exclusive launch offers—reduced fees, priority placement in search, and bonus visibility. These perks are only available before we go live, so joining now is the smartest move.",
+  },
+  {
+    question: "How does escrow protect my payment?",
+    answer:
+      "When Evendor launches, payments will be held in escrow until your vendor or venue delivers as agreed. That means your money is protected—you pay with confidence, not fear of losing a deposit to an unverified contact.",
+  },
 ] as const;
 
 export const VENDOR_CATEGORIES = [
@@ -74,9 +217,9 @@ export const VENDOR_CATEGORIES = [
     image: "/images/photographers-vendor.png",
   },
   {
-    name: "Videographers",
-    slug: "videographers",
-    image: "/images/videographers-vendor.png",
+    name: "Bridals",
+    slug: "bridals",
+    image: "/images/bridals-vendor.jpg",
   },
   {
     name: "Decorators",

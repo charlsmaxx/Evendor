@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   Camera,
-  Video,
   Flower2,
   UtensilsCrossed,
   Sparkles,
@@ -14,9 +14,13 @@ import {
   Package,
   Cake,
   CalendarHeart,
+  Gem,
+  ArrowRight,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SectionHeading } from "@/components/ui/SectionHeading";
+import { Button } from "@/components/ui/Button";
+import { VendorCategoryModal } from "@/components/VendorCategoryModal";
 import { VENDOR_CATEGORIES } from "@/lib/constants";
 import {
   staggerContainer,
@@ -26,7 +30,7 @@ import {
 
 const categoryIcons: Record<string, LucideIcon> = {
   Photographers: Camera,
-  Videographers: Video,
+  Bridals: Gem,
   Decorators: Flower2,
   Caterers: UtensilsCrossed,
   "Makeup Artists": Sparkles,
@@ -39,14 +43,33 @@ const categoryIcons: Record<string, LucideIcon> = {
 };
 
 export function VendorCategories() {
+  const [browseModalOpen, setBrowseModalOpen] = useState(false);
+
   return (
     <section id="categories" className="py-16 sm:py-24">
       <div className="section-container">
-        <SectionHeading
-          eyebrow="Categories"
-          title="Featured vendor categories"
-          description="From photographers to event halls—discover every service you need for your next celebration."
-        />
+        <div className="relative mb-12 text-center md:mb-16">
+          <motion.div
+            className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={viewportOnce}
+            transition={{ duration: 0.5 }}
+          >
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+            </span>
+            Launching soon
+          </motion.div>
+
+          <SectionHeading
+            eyebrow="Categories"
+            title="Featured vendor categories"
+            description="From photographers to event halls—discover every service you need for your next celebration."
+            className="mb-0"
+          />
+        </div>
 
         <motion.div
           className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -73,6 +96,9 @@ export function VendorCategories() {
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-accent/70 via-accent/20 to-transparent" />
+                  <span className="absolute right-3 top-3 rounded-full bg-card/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-accent shadow-sm">
+                    Soon
+                  </span>
                   <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-full bg-card/95 px-3 py-1.5 shadow-sm">
                     <Icon className="h-4 w-4 text-accent" />
                     <span className="text-sm font-semibold text-foreground">
@@ -84,7 +110,31 @@ export function VendorCategories() {
             );
           })}
         </motion.div>
+
+        <motion.div
+          className="mt-10 flex justify-center"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={viewportOnce}
+          transition={{ duration: 0.5 }}
+        >
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => setBrowseModalOpen(true)}
+          >
+            See more categories
+            <ArrowRight className="h-4 w-4" />
+          </Button>
+        </motion.div>
       </div>
+
+      <VendorCategoryModal
+        open={browseModalOpen}
+        onClose={() => setBrowseModalOpen(false)}
+        mode="browse"
+      />
     </section>
   );
 }

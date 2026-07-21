@@ -22,7 +22,7 @@ export function Navbar() {
       className="fixed inset-x-0 top-0 z-50 border-b border-accent/10 bg-white shadow-sm"
       style={{ backgroundColor: "#ffffff" }}
     >
-      <nav className="section-container flex h-16 items-center justify-between sm:h-[4.5rem]">
+      <nav className="section-container flex h-[5.25rem] items-center justify-between">
         <Logo size="sm" />
 
         <ul className="hidden items-center gap-8 md:flex">

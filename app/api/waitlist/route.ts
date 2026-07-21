@@ -1,16 +1,20 @@
 import { NextResponse } from "next/server";
-import { WAITLIST_ROLES } from "@/lib/constants";
+import { isValidWaitlistRole } from "@/lib/constants";
 
 interface WaitlistPayload {
   name: string;
   email: string;
   phone: string;
   role: string;
+  referredBy?: string;
 }
 
 function isValidPayload(body: unknown): body is WaitlistPayload {
   if (!body || typeof body !== "object") return false;
   const data = body as Record<string, unknown>;
+  const hasValidReferral =
+    data.referredBy === undefined ||
+    (typeof data.referredBy === "string" && data.referredBy.trim().length > 0);
   return (
     typeof data.name === "string" &&
     data.name.trim().length > 0 &&
@@ -19,7 +23,8 @@ function isValidPayload(body: unknown): body is WaitlistPayload {
     typeof data.phone === "string" &&
     data.phone.trim().length > 0 &&
     typeof data.role === "string" &&
-    WAITLIST_ROLES.includes(data.role as (typeof WAITLIST_ROLES)[number])
+    isValidWaitlistRole(data.role.trim()) &&
+    hasValidReferral
   );
 }
 
@@ -52,6 +57,9 @@ export async function POST(request: Request) {
         email: body.email.trim().toLowerCase(),
         phone: body.phone.trim(),
         role: body.role,
+        ...(body.referredBy
+          ? { referredBy: body.referredBy.trim().toLowerCase() }
+          : {}),
       }),
     });
 
