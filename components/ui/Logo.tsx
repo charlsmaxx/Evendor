@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import logoImg from "@/app/logo.png";
 
 interface LogoProps {
   className?: string;
@@ -28,8 +27,8 @@ export function Logo({ className = "", size = "md" }: LogoProps) {
     >
       {!imgError ? (
         <Image
-          src={logoImg}
-          alt="Evendor — Plan. Book. Celebrate."
+          src="/evendor-logo.png"
+          alt="Evendor — Discover. Book. Celebrate."
           width={width}
           height={height}
           className={`h-auto w-auto object-contain ${maxH}`}
