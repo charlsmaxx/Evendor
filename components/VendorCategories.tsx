@@ -49,20 +49,6 @@ export function VendorCategories() {
     <section id="categories" className="py-16 sm:py-24">
       <div className="section-container">
         <div className="relative mb-12 text-center md:mb-16">
-          <motion.div
-            className="mb-4 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent"
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={viewportOnce}
-            transition={{ duration: 0.5 }}
-          >
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
-            </span>
-            Launching soon
-          </motion.div>
-
           <SectionHeading
             eyebrow="Categories"
             title="Featured vendor categories"

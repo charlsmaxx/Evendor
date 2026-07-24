@@ -2,13 +2,11 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { WaitlistSocialProof } from "@/components/WaitlistSocialProof";
 import { HERO_IMAGES } from "@/lib/constants";
 import { defaultTransition, staggerContainer, staggerItem } from "@/lib/animations";
-
-const HERO_BADGE = "Events start at Evendor";
 
 export function Hero() {
   return (
@@ -25,21 +23,24 @@ export function Hero() {
           >
             <motion.div
               variants={staggerItem}
-              className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/15 bg-card/80 px-4 py-1.5 text-sm font-medium text-foreground shadow-sm backdrop-blur-sm"
+              className="mb-6 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/10 px-4 py-1.5 text-sm font-semibold text-accent"
             >
-              <Sparkles className="h-4 w-4 text-accent" />
-              <span>{HERO_BADGE}</span>
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-accent" />
+              </span>
+              Launching soon
             </motion.div>
 
             <motion.h1
               variants={staggerItem}
-              className="font-heading text-3xl font-semibold leading-[1.15] text-accent sm:text-4xl lg:text-[2.75rem]"
+              className="font-heading text-3xl font-semibold leading-[1.15] text-foreground sm:text-4xl lg:text-[2.75rem]"
             >
-              Discover.{" "}
-              <span className="text-foreground">Book</span> &{" "}
+              Find. Compare. Book{" "}
+              <span className="text-accent">&</span>{" "}
               <br />
               Make Every Event <br />{" "}
-              <span className="text-foreground">Unforgettable.</span>
+              <span className="text-accent">Unforgettable.</span>
             </motion.h1>
 
             <motion.p
